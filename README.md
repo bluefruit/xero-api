@@ -1,3 +1,5 @@
+This is a public repository don't put secrets or confidential information in here.  
+
 In order to run example.py use
 poetry run uvicorn xero-api.example:app --reload
 
