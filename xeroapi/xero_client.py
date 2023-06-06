@@ -25,7 +25,7 @@ class TenantRateLimiter:
             self.calls_this_minute = 0
         else:
             self.calls_this_minute -= 1
-        await asyncio.sleep(1)
+        await asyncio.sleep(1.05) 
         asyncio.create_task(self.minute_drop())
 
     async def day_drop(self):
@@ -39,9 +39,6 @@ class TenantRateLimiter:
 
 
     async def request(self, request, *args, **kwargs):
-        """If there are too many requests this could end up choking on dealing with too many requests
-        However, It should allow temporary bursts at full speed, then drop down to average throughput if it keeps
-        getting hammered."""
         bool, wait = self.check_limits()
         while(not bool):
             await asyncio.sleep(wait)
@@ -58,11 +55,11 @@ class TenantRateLimiter:
 
 
     def check_limits(self):
-        if(self.active_calls > 5):
+        if(self.active_calls > 4):
             return False, 0.05
-        elif(self.calls_this_minute > 60):
+        elif(self.calls_this_minute > 55):
             return False, 0.5
-        elif(self.calls_this_day > 5000):
+        elif(self.calls_this_day > 4800):
             return False, 9
         return True, 0
 
