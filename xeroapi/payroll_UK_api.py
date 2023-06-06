@@ -17,7 +17,6 @@ class PayrollUKAPI:
         """Does not provide all the employee information unfortunately, Use to get the IDs and then use
         get_employee_by_id to get the full information if needed."""
         response = await self.client.get("payroll.xro/2.0/employees")
-        print(response)
         return response
 
     async def get_employee_by_id(self, employee_id):
@@ -126,7 +125,7 @@ class PayrollUKAPI:
         country_name: str = None,
     ):
         """Updates employee with these values"""
-        # Validator
+        # Validator koaghagha
         try:
             PutEmployeeModel(
                 title=title,

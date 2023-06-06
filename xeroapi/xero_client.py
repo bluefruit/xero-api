@@ -2,8 +2,6 @@ import httpx
 import asyncio
 from xeroapi.tokens import get_access_token
 import datetime
-import pprint
-
 
 class TenantRateLimiter:
     def __init__(self):
@@ -18,35 +16,55 @@ class TenantRateLimiter:
         self.active_calls = 0
         self.calls_this_minute = 0
         self.calls_this_day = 0
+        asyncio.create_task(self.minute_drop())
+        asyncio.create_task(self.day_drop())
+    
+    async def minute_drop(self):
+        "60 per minute so average throughput is one per second"
+        if(self.calls_this_minute <= 0):
+            self.calls_this_minute = 0
+        else:
+            self.calls_this_minute -= 1
+        await asyncio.sleep(1)
+        asyncio.create_task(self.minute_drop())
+
+    async def day_drop(self):
+        "# 5000 a day so average throughput is 1 per 17.28 Seconds"
+        if(self.calls_this_day <= 0):
+            self.calls_this_day = 0
+        else:
+            self.calls_this_day -= 1
+        await asyncio.sleep(18)
+        asyncio.create_task(self.day_drop())
+
 
     async def request(self, request, *args, **kwargs):
         """If there are too many requests this could end up choking on dealing with too many requests
         However, It should allow temporary bursts at full speed, then drop down to average throughput if it keeps
         getting hammered."""
-        if self.calls_this_day < 5000:
-            self.calls_this_day += 1
-            if self.calls_this_minute < 60:
-                self.calls_this_minute += 1
-                if self.active_calls < 5:
-                    self.active_calls += 1
-                    response = await request(*args, **kwargs)
-                    self.active_calls -= 1
-                else:
-                    asyncio.sleep(
-                        0.3
-                    )  # 5 per second so average throughput is one per 0.2 seconds
-                    self.request(request, *args, *kwargs)
-                self.calls_this_minute -= 1
-            else:
-                asyncio.sleep(
-                    1.5
-                )  # 60 per minute so average throughput is one per second
-                self.request(request, *args, *kwargs)
-            self.calls_this_day -= 1
-        else:
-            asyncio.sleep(25)  # 5000 a day so average throughput is 1 per 17.28 Seconds
-            self.request(request, *args, *kwargs)
-        return response
+        bool, wait = self.check_limits()
+        while(not bool):
+            await asyncio.sleep(wait)
+            bool, wait = self.check_limits()
+        print(datetime.datetime.now())
+        print(self.active_calls, self.calls_this_minute, self.calls_this_day)
+        self.active_calls += 1
+        self.calls_this_minute += 1
+        self.calls_this_day += 1
+        s = await request(*args, *kwargs)
+        self.active_calls -= 1
+        return s
+    
+
+
+    def check_limits(self):
+        if(self.active_calls > 5):
+            return False, 0.05
+        elif(self.calls_this_minute > 60):
+            return False, 0.5
+        elif(self.calls_this_day > 5000):
+            return False, 9
+        return True, 0
 
 
 class XeroClient:
@@ -94,7 +112,8 @@ class XeroClient:
             try:
                 result.raise_for_status()
             except Exception as e:
-                raise Exception(f"{result.status_code}: {pprint.pformat(result.json())}")
+                raise e
+                #raise Exception(f"{result.status_code}: {pprint.pformat(result.json())}, \n{e}")
             return result.json()
         return kernel
 
