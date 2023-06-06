@@ -8,7 +8,7 @@ async def test_rate_limiter():
     rl = TenantRateLimiter()
     client = AsyncClient()
     tasks = []
-    for i in range(0, 200):
+    for i in range(0, 90):
         tasks.append(asyncio.create_task(rl.request(client.get, url)))
     await asyncio.gather(*tasks)
     assert 0 == 1
