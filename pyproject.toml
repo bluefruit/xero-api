@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xeroapi"
-version = "0.1.6"
+version = "0.1.7"
 description = ""
 authors = ["tim-meiwald-bluefruit <tim.meiwald@bluefruit.co.uk>"]
 readme = "README.md"
