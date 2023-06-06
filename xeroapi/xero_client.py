@@ -108,6 +108,8 @@ class XeroClient:
             result = await func(*args, **kwargs)
             try:
                 result.raise_for_status()
+            except httpx.HTTPStatusError as e:
+                print(result)
             except Exception as e:
                 raise e
                 #raise Exception(f"{result.status_code}: {pprint.pformat(result.json())}, \n{e}")
