@@ -98,7 +98,7 @@ class XeroClient:
         This class is intended to act as a simpler fully async Xero API not as the main program.
 
         Xero also creates it's own Python Xero API it's just not very good and not fully async."""
-        self.client = httpx.AsyncClient(base_url="https://api.xero.com/")
+        self.client = httpx.AsyncClient(base_url="https://api.xero.com/", timeout =10.0)
         self.rate_limiter = TenantRateLimiter()
         self.token = None
         self.id = id
@@ -128,7 +128,7 @@ class XeroClient:
             "Accept": "application/json",
         }
         self.client = httpx.AsyncClient(
-            base_url="https://api.xero.com/", headers=headers
+            base_url="https://api.xero.com/", headers=headers, timeout =10.0
         )
 
     def status_check(func):
