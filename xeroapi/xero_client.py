@@ -35,7 +35,7 @@ class TenantRateLimiter:
         self.minute_requests.append(time)
         self.day_requests.append(time)
         try:
-            s = await request(*args, *kwargs)
+            s = await request(*args, **kwargs)
         except httpx.HTTPStatusError as e:
             #raise RateLimitException(f"Rate Limit Error, \n{s.headers}\n{e}\n")
             s = await self.request(request, *args, **kwargs)
