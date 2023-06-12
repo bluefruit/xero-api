@@ -41,8 +41,6 @@ class TenantRateLimiter:
             s = await self.request(request, *args, **kwargs)
             self.active_calls -= 1
             return s
-        except Exception as e:
-            raise Exception(e)
         self.active_calls -= 1
         return s
     
