@@ -71,7 +71,7 @@ class TenantRateLimiter:
         for i in range(0, count):
             self.minute_requests.popleft()
         size = len(self.minute_requests)
-        if(size >= 55): #55 to add a buffer, due to random apparent failures
+        if(size >= 60): #55 to add a buffer, due to random apparent failures
             return False
         else:
             return True
