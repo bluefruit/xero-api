@@ -134,7 +134,11 @@ class XeroClient:
     def status_check(func):
         async def kernel(*args, **kwargs):
             result = await func(*args, **kwargs)
-            return result.json()
+            if(result.status_code == 200):
+                return result.json()
+            else:
+                result.raise_for_status()
+                return -1
         return kernel
 
     @status_check
