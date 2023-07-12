@@ -140,7 +140,7 @@ class XeroClient:
                 try:
                     result.raise_for_status()
                 except Exception as e:
-                    raise Exception(f"Error: {result.status_code}\n" + result.text)
+                    raise Exception(f"Args: {args}\nKwargs: {kwargs}\nError: {result.status_code}\n" + result.text)
                 return -1
         return kernel
 
