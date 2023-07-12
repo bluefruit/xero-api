@@ -137,7 +137,10 @@ class XeroClient:
             if(result.status_code == 200):
                 return result.json()
             else:
-                result.raise_for_status()
+                try:
+                    result.raise_for_status()
+                except Exception as e:
+                    raise Exception(f"Error: {result.status_code}\n" + result.text)
                 return -1
         return kernel
 
