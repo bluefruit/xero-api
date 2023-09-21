@@ -73,3 +73,10 @@ async def get_access_token(client, id, secret, scopes):
     token = Token()
     token.set(JWT)
     return token
+
+
+if __name__ == "__main__":
+    id = "0EB7741EA74B454C9BA7697816EA8C1A"
+    secret = "bVFsP1BPdZot1NtFBN1b6SqilVmOcM24vt9m_YqH_as-4bfx"
+    l = create_auth_header(id, secret)
+    print(l)

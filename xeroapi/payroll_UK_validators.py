@@ -66,7 +66,7 @@ class PutEmployeeModel(BaseModel):
     address_line_2: Optional[str]
     county: Optional[str]
     country_name: Optional[str]
-
+    ni: Optional[str]
     # TODO add json creation https://developer.xero.com/documentation/api/payrolluk/employees PUT
 
     @validator("title", "first_name", "last_name", "address_line_1")

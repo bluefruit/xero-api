@@ -123,6 +123,7 @@ class PayrollUKAPI:
         address_line_2: str = None,
         county: str = None,
         country_name: str = None,
+        ni: str = None,
     ):
         """Updates employee with these values"""
         # Validator koaghagha
@@ -142,6 +143,7 @@ class PayrollUKAPI:
                 address_line_2=address_line_2,
                 county=county,
                 country_name=country_name,
+                ni = ni,
             )
         except TypeError as e:
             return e
@@ -158,6 +160,7 @@ class PayrollUKAPI:
             "Email": email,
             "PhoneNumber": phone_number,
             "IsOffPayrollWorker": None,
+            "NationalInsuranceNumber": ni
         }
 
         employee = self._add_optional_data_to_required(
