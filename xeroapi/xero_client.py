@@ -29,7 +29,6 @@ class TenantRateLimiter:
         while(not bool):
             await asyncio.sleep(wait)
             bool, wait = self.check_limits()
-        print(datetime.datetime.now())
         self.active_calls += 1
         time = datetime.datetime.now()
         self.minute_requests.append(time)
@@ -45,7 +44,6 @@ class TenantRateLimiter:
         return s
     
     def check_limits(self):
-        print(len(self.minute_requests), len(self.day_requests), self.active_calls)
         if(self.active_calls >= 5):
             time_to_wait = 0.05
             state = False

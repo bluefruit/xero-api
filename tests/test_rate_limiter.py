@@ -15,6 +15,7 @@ async def test_rate_limiter():
     await asyncio.gather(*tasks)
     end_time = time()
     # Rate limit is 60 a second in a rolling window so 90 requests should take a minimum of
-    # 30 seconds.
-    assert end_time >= start_time + 30
+    # 60 seconds. 
+    assert end_time >= start_time + 60
+    assert end_time <= start_time + 70
 

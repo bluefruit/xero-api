@@ -65,6 +65,8 @@ async def _get_access_token(client, id, secret, scopes):
     response = await client.post(
         "https://identity.xero.com/connect/token", headers=headers, data=request_body
     )
+    if response.status_code != 200:
+        raise Exception(f"Invalid Token\n{response.text}")
     return response.json()
 
 
