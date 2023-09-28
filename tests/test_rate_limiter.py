@@ -3,6 +3,8 @@ from httpx import AsyncClient
 import pytest
 import asyncio
 from time import time
+
+
 @pytest.mark.asyncio
 async def test_rate_limiter():
     url = "https://klipfolio.bluefruit.software/"
@@ -15,7 +17,6 @@ async def test_rate_limiter():
     await asyncio.gather(*tasks)
     end_time = time()
     # Rate limit is 60 a second in a rolling window so 90 requests should take a minimum of
-    # 60 seconds. 
+    # 60 seconds.
     assert end_time >= start_time + 60
     assert end_time <= start_time + 70
-

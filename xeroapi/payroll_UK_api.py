@@ -143,7 +143,7 @@ class PayrollUKAPI:
                 address_line_2=address_line_2,
                 county=county,
                 country_name=country_name,
-                ni = ni,
+                ni=ni,
             )
         except TypeError as e:
             return e
@@ -160,7 +160,7 @@ class PayrollUKAPI:
             "Email": email,
             "PhoneNumber": phone_number,
             "IsOffPayrollWorker": None,
-            "NationalInsuranceNumber": ni
+            "NationalInsuranceNumber": ni,
         }
 
         employee = self._add_optional_data_to_required(

@@ -75,5 +75,3 @@ async def get_access_token(client, id, secret, scopes):
     token = Token()
     token.set(JWT)
     return token
-
-

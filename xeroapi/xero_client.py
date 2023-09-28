@@ -8,6 +8,7 @@ from collections import deque
 class RateLimitException(Exception):
     pass
 
+
 class TenantRateLimiter:
     def __init__(self):
         """
@@ -26,7 +27,7 @@ class TenantRateLimiter:
 
     async def request(self, request, *args, **kwargs):
         bool, wait = self.check_limits()
-        while(not bool):
+        while not bool:
             await asyncio.sleep(wait)
             bool, wait = self.check_limits()
         self.active_calls += 1
@@ -36,55 +37,55 @@ class TenantRateLimiter:
         try:
             s = await request(*args, **kwargs)
         except httpx.HTTPStatusError as e:
-            #raise RateLimitException(f"Rate Limit Error, \n{s.headers}\n{e}\n")
+            # raise RateLimitException(f"Rate Limit Error, \n{s.headers}\n{e}\n")
             s = await self.request(request, *args, **kwargs)
             self.active_calls -= 1
             return s
         self.active_calls -= 1
         return s
-    
+
     def check_limits(self):
-        if(self.active_calls >= 5):
+        if self.active_calls >= 5:
             time_to_wait = 0.05
             state = False
-        elif(self.minute_check() == False):
+        elif self.minute_check() == False:
             time_to_wait = 1
             state = False
-        elif(self.day_check() == False):
+        elif self.day_check() == False:
             time_to_wait = 17.28
             state = False
         else:
             state = True
-        if(state == False):
+        if state == False:
             return False, time_to_wait
         return state, 0
-    
+
     def minute_check(self):
         ctime = datetime.datetime.now()
         ctime = ctime - datetime.timedelta(seconds=60)
         count = 0
         for time in self.minute_requests:
-            if(time < ctime):
+            if time < ctime:
                 count += 1
         for i in range(0, count):
             self.minute_requests.popleft()
         size = len(self.minute_requests)
-        if(size >= 60): #55 to add a buffer, due to random apparent failures
+        if size >= 60:  # 55 to add a buffer, due to random apparent failures
             return False
         else:
             return True
-        
+
     def day_check(self):
         ctime = datetime.datetime.now()
         ctime = ctime - datetime.timedelta(days=1)
         count = 0
         for time in self.day_requests:
-            if(time < ctime):
+            if time < ctime:
                 count += 1
         for i in range(0, count):
             self.day_requests.popleft()
         size = len(self.day_requests)
-        if(size >= 5000): # 
+        if size >= 5000:  #
             return False
         else:
             return True
@@ -96,7 +97,7 @@ class XeroClient:
         This class is intended to act as a simpler fully async Xero API not as the main program.
 
         Xero also creates it's own Python Xero API it's just not very good and not fully async."""
-        self.client = httpx.AsyncClient(base_url="https://api.xero.com/", timeout =10.0)
+        self.client = httpx.AsyncClient(base_url="https://api.xero.com/", timeout=10.0)
         self.rate_limiter = TenantRateLimiter()
         self.token = None
         self.id = id
@@ -126,20 +127,24 @@ class XeroClient:
             "Accept": "application/json",
         }
         self.client = httpx.AsyncClient(
-            base_url="https://api.xero.com/", headers=headers, timeout =10.0
+            base_url="https://api.xero.com/", headers=headers, timeout=10.0
         )
 
     def status_check(func):
         async def kernel(*args, **kwargs):
             result = await func(*args, **kwargs)
-            if(result.status_code == 200):
+            if result.status_code == 200:
                 return result.json()
             else:
                 try:
                     result.raise_for_status()
                 except Exception as e:
-                    raise Exception(f"Args: {args}\nKwargs: {kwargs}\nError: {result.status_code}\n" + result.text)
+                    raise Exception(
+                        f"Args: {args}\nKwargs: {kwargs}\nError: {result.status_code}\n"
+                        + result.text
+                    )
                 return -1
+
         return kernel
 
     @status_check
