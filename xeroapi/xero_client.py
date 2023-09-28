@@ -122,7 +122,7 @@ class XeroClient:
         token = await get_access_token(self.client, self.id, self.secret, self.scopes)
         self.token = token
         await self.client.aclose()  # Since we want a default header containing the access token
-        # We recreate the client everytime we reauthenticate
+        # We recreate the http client everytime we reauthenticate
         headers = {
             "Authorization": f"Bearer {token.access_token}",
             "Accept": "application/json",
