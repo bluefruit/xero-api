@@ -70,3 +70,7 @@ class AccountingAPI:
             f"api.xro/2.0/Reports/ProfitAndLoss", params=params
         )
         return response
+
+    async def get_accounts(self):
+        response = await self.client.get("api.xro/2.0/Accounts")
+        return response
