@@ -154,8 +154,6 @@ async def test_post_salary_and_wages(payroll_client):
     )
     employee_id = employee["employeeID"]
     response = await payroll_client.get_salary_and_wages(employee_id)
-    pprint.pprint(response)
-
     response = await payroll_client.get_earnings_rates()
     earnings_rate_ID = response["earningsRates"][0]["earningsRateID"]  # RegularEarnings
 
@@ -185,7 +183,6 @@ async def test_put_salary_and_wages(payroll_client):
     assert response["httpStatusCode"] == "OK"
     earnings_rate_ID = response["salaryAndWages"][-1]["earningsRateID"]
     salary_and_wages_id = response["salaryAndWages"][-1]["salaryAndWagesID"]
-    print(employee_id, earnings_rate_ID, salary_and_wages_id)
     response = await payroll_client.put_salary_and_wages(
         employee_id,
         salary_and_wages_id,
@@ -198,7 +195,6 @@ async def test_put_salary_and_wages(payroll_client):
         "Active",
         "Salary",
     )
-    pprint.pprint(response)
     assert response["httpStatusCode"] == "OK"
 
 
