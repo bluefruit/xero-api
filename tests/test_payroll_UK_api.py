@@ -37,42 +37,36 @@ async def test_post_employee(payroll_client):
     # Fails if previously been added due to Xeros Validation
     kwargs = {
         "title": "Mr.",
-        "firstName": "Edgar",
-        "lastName": "Allan Po",
-        "dateOfBirth": "1985-03-24",
+        "first_name": "Edgar",
+        "last_name": "Allan Po",
+        "date_of_birth": "1985-03-24",
         "gender": "M",
+        "address_line_1": "171 Midsummer",
+        "city": "Milton Keynes",
+        "post_code": "MK9 1EB",
         "email": "tester@gmail.com",
-        "phoneNumber": "0400123456",
-        "isOffPayrollWorker": 'false',
-        "address": {
-            "addressLine1": "171 Midsummer",
-            "city": "Milton Keynes",
-            "postCode": "MK9 1EB"
-        },
-        "nationalInsuranceNumber": "AB123456C"
-        }
+        "is_off_payroll_worker": False,
+        "phone_number": "0400123456",
+    }
     response = await payroll_client.post_employee(**kwargs)
     assert response["httpStatusCode"] == "OK"
 
 
 @pytest.mark.asyncio
 async def test_put_employee(payroll_client):
-    kwargs ={
+    kwargs = {
         "title": "Mr.",
-        "firstName": "Edgar",
-        "lastName": "Allan Po",
-        "dateOfBirth": "1985-03-24",
+        "first_name": "Edgar",
+        "last_name": "Allan Potwo",
+        "date_of_birth": "1985-03-24",
         "gender": "M",
-        "email": "tester@gmail.com",
-        "phoneNumber": "0400123456",
-        "isOffPayrollWorker": 'false',
-        "address": {
-            "addressLine1": "171 Midsummer",
-            "city": "Milton Keynes",
-            "postCode": "MK9 1EB"
-        },
-        "nationalInsuranceNumber": "AB123456C"
-        }
+        "address_line_1": "171 Midsummer",
+        "city": "Milton Keynes",
+        "post_code": "MK9 1EB",
+        "email": "tester2@gmail.com",
+        "is_off_payroll_worker": False,
+        "phone_number": "0400123456",
+    }
     employees = await payroll_client.get_employees()
     employee_id = "57fb1174-142f-42f1-9222-57ff6c9a0d7c"  # Will break on different test instance, replace with correct one
     response = await payroll_client.put_employee(employee_id, **kwargs)
