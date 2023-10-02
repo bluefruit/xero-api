@@ -1,5 +1,7 @@
 from xeroapi.xero_client import XeroClient
 import datetime
+from typing import Optional
+from xeroapi.accounting_api_models import *
 
 
 class AccountingAPI:
@@ -20,6 +22,12 @@ class AccountingAPI:
         response = await self.client.get(f"api.xro/2.0/Invoices/{invoiceID}")
 
         return response
+    
+    async def post_invoice(self,
+
+                           
+                           ):
+        return 
 
     async def get_contacts(self):
         response = await self.client.get(f"api.xro/2.0/Contacts")

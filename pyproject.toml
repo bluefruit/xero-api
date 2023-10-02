@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xeroapi"
-version = "0.1.7"
+version = "1.0.0"
 description = ""
 authors = ["tim-meiwald-bluefruit <tim.meiwald@bluefruit.co.uk>"]
 readme = "README.md"
@@ -12,7 +12,7 @@ httpx = "^0.23.3"
 
 
 [tool.poetry.group.dev.dependencies]
-fastapi = "^0.95.0"
+fastapi = "^0.103.2"
 python-dotenv = "^1.0.0"
 uvicorn = "^0.21.1"
 email-validator = "^1.3.1"

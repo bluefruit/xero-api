@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-ID, SECRET = os.environ["CLIENT_ID"], os.environ["CLIENT_SECRET"]
+ID, SECRET = os.environ["XERO_ID"], os.environ["XERO_SECRET"]
 scopes = [
     "accounting.transactions",
     "accounting.transactions.read",

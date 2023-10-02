@@ -1,0 +1,35 @@
+name: CI
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+
+  unit-test:
+    #needs: formatter
+    runs-on: ubuntu-latest
+    #runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Load cached Poetry installation
+        uses: actions/cache@v3
+        with:
+          path: ~/.local  
+          key: poetry-1  
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+      
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'poetry'
+      - run: poetry install -E test
+      - name: Test with pytest
+        run: poetry run pytest --cov . -n 2

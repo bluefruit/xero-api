@@ -2,28 +2,28 @@ from xeroapi.payroll_UK_validators import PostEmployeeModel, PutEmployeeModel
 
 
 def test_post_employee_model_no_optional():
-    kwargs = {
-        "title": "Mr",
-        "first_name": "Yoyo",
-        "last_name": "Dobbins",
-        "date_of_birth": "2022-07-01",
-        "gender": "M",
-        "address_line_1": "1 Street",
-        "city": "Numenor",
-        "post_code": "N190N7",
+    payload = {
+        "Title": "Mr",
+        "FirstName": "Yoyo",
+        "LastName": "Dobbins",
+        "DateOfBirth": "2022-07-01",
+        "Gender": "M",
+        "AddressLine1": "1 Street",
+        "City": "Numenor",
+        "PostCode": "N190N7"
     }
-    s = PostEmployeeModel(**kwargs)
+    s = PostEmployeeModel(**payload)
 
 
 def test_put_employee_model_no_optional():
-    kwargs = {
-        "title": "Mr",
-        "first_name": "Yoyo",
-        "last_name": "Dobbins",
-        "date_of_birth": "2022-07-01",
-        "gender": "M",
-        "address_line_1": "1 Street",
-        "city": "Numenor",
-        "post_code": "N190N7",
+    payload = {
+        "Title": "Mr",
+        "FirstName": "Yoyo",
+        "LastName": "Dobbins",
+        "DateOfBirth": "2022-07-01",
+        "Gender": "M",
+        "AddressLine1": "1 Street",
+        "City": "Numenor",
+        "PostCode": "N190N7"
     }
-    s = PutEmployeeModel(**kwargs)
+    s = PutEmployeeModel(**payload)

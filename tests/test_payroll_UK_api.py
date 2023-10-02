@@ -170,7 +170,6 @@ async def test_post_salary_and_wages(payroll_client):
         "Active",
         "Salary",
     )
-    pprint.pprint(response)
     assert response["httpStatusCode"] == "OK"
 
 
