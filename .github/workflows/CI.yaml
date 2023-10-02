@@ -21,7 +21,7 @@ jobs:
           python-version: '3.10'
       - run: pip install .
       - name: Test with pytest
-        with: 
+        env: 
           XERO_ID: ${{ secrets.XERO_ID }}
           XERO_SECRET: ${{ secrets.XERO_SECRET }}
         run: pytest --cov . -n 2
