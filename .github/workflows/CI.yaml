@@ -30,6 +30,6 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'poetry'
-      - run: poetry install -E test
+      - run: poetry install
       - name: Test with pytest
         run: poetry run pytest --cov . -n 2
