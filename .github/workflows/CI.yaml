@@ -24,5 +24,5 @@ jobs:
         env: 
           XERO_ID: ${{ secrets.XERO_ID }}
           XERO_SECRET: ${{ secrets.XERO_SECRET }}
-        run: pytest --cov . -n 2
+        run: pytest --cov .
         
