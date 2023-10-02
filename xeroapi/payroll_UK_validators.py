@@ -10,7 +10,6 @@ def must_not_exceed_n_length(n, v):
 
 
 class PostEmployeeModel(BaseModel):
-    model_config = ConfigDict(alias_generator=to_pascal)
     title: str
     first_name: str
     last_name: str
@@ -52,7 +51,6 @@ class PostEmployeeModel(BaseModel):
 
 
 class PutEmployeeModel(BaseModel):
-    model_config = ConfigDict(alias_generator=to_pascal)
     title: str
     first_name: str
     last_name: str
