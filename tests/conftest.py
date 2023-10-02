@@ -2,9 +2,9 @@ import pytest
 from xeroapi import XeroClient, AccountingAPI, PayrollUKAPI
 import asyncio
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 ID, SECRET = os.environ["XERO_ID"], os.environ["XERO_SECRET"]
 scopes = [
     "accounting.transactions",
