@@ -10,16 +10,16 @@ scopes = [
     "accounting.transactions",
     "accounting.transactions.read",
     "accounting.reports.read",
-    "payroll.settings",
-    "payroll.settings.read",
+    "accounting.settings",
+    "accounting.settings.read",
     "payroll.timesheets",
     "payroll.timesheets.read",
-    "payroll.payslip.read",
     "payroll.payslip",
-    "payroll.payruns.read",
+    "payroll.payslip.read",
     "payroll.payruns",
+    "payroll.payruns.read",
     "payroll.employees.read",
-    "payroll.employees",
+    "payroll.employees"
 ]
 
 

@@ -206,3 +206,7 @@ async def test_put_salary_and_wages(payroll_client):
 async def test_get_earnings_rates(payroll_client):
     response = await payroll_client.get_earnings_rates()
     assert response["httpStatusCode"] == "OK"
+
+
+
+
